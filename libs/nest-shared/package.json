@@ -1,0 +1,32 @@
+{
+  "name": "@maple/shared",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "tslib": "^2.8.1",
+    "@maple/models": "0.0.1"
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/js:tsc",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "options": {
+          "outputPath": "dist/libs/nest-shared",
+          "tsConfig": "libs/nest-shared/tsconfig.lib.json",
+          "packageJson": "libs/nest-shared/package.json",
+          "main": "libs/nest-shared/src/index.ts",
+          "assets": [
+            "libs/nest-shared/*.md"
+          ],
+          "generateExportsField": true
+        }
+      }
+    },
+    "tags": [
+      "scope:shared"
+    ]
+  }
+}

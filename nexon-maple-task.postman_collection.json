@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "cad7aac8-92bf-41ba-a710-9174839b6adb",
+		"name": "nexon-maple-task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "894656",
+		"_collection_link": "https://interstellar-zodiac-724873.postman.co/workspace/My-Workspace~03c8c71e-6576-4b85-873a-309eb66324d7/collection/894656-cad7aac8-92bf-41ba-a710-9174839b6adb?action=share&source=collection_link&creator=894656"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "signUp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SignUp ($input: SignUpInput!){\n    signUp(input: $input) {\n        accessToken\n        refreshToken\n    }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"name\": \"테스트\",\n        \"email\": \"testEmail006@gmail.com\",\n        \"password\": \"test123!@#\",\n        \"role\": \"USER\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signIn",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation SignIn ($input: SignInInput!) {\n    signIn(input: $input) {\n        accessToken\n        refreshToken\n    }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"email\": \"mapel-admin@nexon.co.kr\",\n        \"password\": \"test123!@#\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateUser ($input: UpdateUserInput!) {\n    updateUser(input: $input) {\n        id\n        name\n        email\n        role\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n    \"input\": {\n        \"name\": \"이름변경\"\n    }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query User ($id: String){\n    user(id: $id) {\n        id\n        name\n        email\n        role\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n    \n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "createEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateEvent($input: CreateEventInput!) {\n  createEvent(input: $input) {\n    id\n    startAt\n    endAt\n    type\n    title\n    description\n    condition\n    isDuplicated\n    totalReward\n    imageUrl\n    isActive\n    isDeleted\n    createdAt\n    updatedAt\n    eventRewards {\n      id\n      eventId\n      rewardType\n      quantity\n      weight\n      referenceTable\n      referenceId\n      createdAt\n      updatedAt\n    }\n  }\n}\n",
+								"variables": "{\n  \"input\": {\n    \"startAt\": \"2025-06-01T09:00:00Z\",\n    \"endAt\": \"2025-08-31T18:00:00Z\",\n    \"type\": \"ATTENDANCE\",\n    \"title\": \"연속 로그인 이벤트 002\",\n    \"description\": \"친구를 초대하고 다양한 보상을 받아가세요!\",\n    \"condition\": {\n      \"requiredDays\": 5,\n      \"isConsecutive\": false\n    },\n    \"isDuplicated\": false,\n    \"totalReward\": 1000,\n    \"isActive\": true,\n    \"imageUrl\": \"https://example.com/images/summer-event-2025.jpg\",\n    \"eventRewards\": [\n      {\n        \"rewardType\": \"POINT\",\n        \"quantity\": 500,\n        \"weight\": 10,\n        \"referenceId\": null\n      },\n      {\n        \"rewardType\": \"ITEM\",\n        \"quantity\": 1,\n        \"weight\": 5,\n        \"referenceId\": \"682b28e3355778151c65d118\"\n      },\n      {\n        \"rewardType\": \"COUPON\",\n        \"quantity\": 1,\n        \"weight\": 3,\n        \"referenceId\": \"682b28e3355778151c65d11d\"\n      }\n    ]\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateEvent($input: UpdateEventInput!) {\n  updateEvent(input: $input) {\n    id\n    startAt\n    endAt\n    type\n    title\n    description\n    condition\n    isDuplicated\n    totalReward\n    imageUrl\n    isActive\n    isDeleted\n    createdAt\n    updatedAt\n    eventRewards {\n      id\n      eventId\n      rewardType\n      quantity\n      weight\n      referenceTable\n      referenceId\n      createdAt\n      updatedAt\n    }\n  }\n}\n",
+								"variables": "{\n  \"input\": {\n    \"id\": \"682b2961d2eed87b5e2c6681\",\n    \"type\": \"INVITE\",\n    \"title\": \"여름 친구 초대 이벤트 이름 변경!!\",\n    \"description\": \"친구를 초대하고 다양한 보상을 받아가세요!\",\n    \"condition\": {\n      \"requiredInvites\": 3,\n      \"requiredInvitesPerDay\": 1,\n      \"requiredInvitesPerDayLimit\": 5\n    },\n    \"isDuplicated\": false,\n    \"totalReward\": 1000,\n    \"isActive\": true,\n    \"imageUrl\": \"https://example.com/images/summer-event-2025.jpg\",\n    \"eventRewards\": [\n      {\n        \"id\": \"682b64cea1828b7f5ea97905\",\n        \"isDeelted\": true\n      }\n    ]\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "events",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Events(\n  $sortBy: [SortInput!]\n  $page: Int\n  $take: Int\n  $title: String\n  $type: EventType\n  $startAt: DateTime\n  $endAt: DateTime\n  $isActive: Boolean\n) {\n  events(\n    sortBy: $sortBy\n    page: $page\n    take: $take\n    title: $title\n    type: $type\n    startAt: $startAt\n    endAt: $endAt\n    isActive: $isActive\n  ) {\n    edges {\n      id\n      startAt\n      endAt\n      type\n      title\n      description\n      condition\n      isDuplicated\n      totalReward\n      imageUrl\n      isActive\n      isDeleted\n      createdAt\n      updatedAt\n      eventRewards {\n        id\n        eventId\n        rewardType\n      }\n    }\n    pageInfo {\n      total\n      page\n      take\n      hasNextPage\n      totalPages\n    }\n  }\n}\n",
+								"variables": "{\n    \"take\": 5,\n    \"sortBy\": [{\n        \"field\": \"createdAt\",\n        \"direction\": true\n    }]\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "event",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query Event ($id: String!){\n    event(id: $id) {\n        id\n        startAt\n        endAt\n        type\n        title\n        description\n        condition\n        isDuplicated\n        totalReward\n        imageUrl\n        isActive\n        isDeleted\n        createdAt\n        updatedAt\n        eventRewards {\n            id\n            eventId\n            rewardType\n            quantity\n            weight\n            referenceTable\n            referenceId\n            createdAt\n            updatedAt\n        }\n    }\n}\n",
+								"variables": "{\n  \"id\": \"682b2961d2eed87b5e2c6681\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "eventReward",
+			"item": [
+				{
+					"name": "createEventReward",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation CreateEventReward ($input: CreateEventRewardInput!) {\n    createEventReward(input: $input) {\n        id\n        eventId\n        rewardType\n        quantity\n        weight\n        referenceTable\n        referenceId\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n  \"input\": {\n    \"eventId\": \"682b2ba1059f38ced0475533\",\n    \"rewardType\": \"POINT\",\n    \"quantity\": 500,\n    \"weight\": 10,\n    \"referenceId\": null\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateEventReward",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation UpdateEventReward ($input: UpdateEventRewardInput!){\n    updateEventReward(input: $input) {\n        id\n        eventId\n        rewardType\n        quantity\n        weight\n        referenceTable\n        referenceId\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n  \"input\": {\n    \"id\": \"682b71553b0411eb108f3bac\",\n    \"rewardType\": \"POINT\",\n    \"quantity\": 300,\n    \"weight\": 10,\n    \"referenceId\": null\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eventRewards",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query EventRewards(\n  $page: Int,\n  $take: Int,\n  $sortBy: [SortInput!],\n  $eventId: String,\n  $rewardType: EventRewardType,\n  $minQuantity: Int,\n  $maxQuantity: Int,\n  $minWeight: Int,\n  $maxWeight: Int,\n  $referenceId: String\n) {\n  eventRewards(\n    page: $page,\n    take: $take,\n    sortBy: $sortBy,\n    eventId: $eventId,\n    rewardType: $rewardType,\n    minQuantity: $minQuantity,\n    maxQuantity: $maxQuantity,\n    minWeight: $minWeight,\n    maxWeight: $maxWeight,\n    referenceId: $referenceId\n  ) {\n    edges {\n      id\n      eventId\n      rewardType\n      quantity\n      weight\n      referenceId\n      createdAt\n      updatedAt\n    }\n    pageInfo {\n      total\n      page\n      take\n      hasNextPage\n      totalPages\n    }\n  }\n}",
+								"variables": "{\n  \"page\": 1,\n  \"take\": 10,\n  \"sortBy\": [\n    {\n      \"field\": \"createdAt\",\n      \"direction\": false\n    }\n  ],\n  \"eventId\": \"682b2ba1059f38ced0475533\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eventReward",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query EventReward ($id: String!) {\n    eventReward(id: $id) {\n        id\n        eventId\n        rewardType\n        quantity\n        weight\n        referenceTable\n        referenceId\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n  \"id\": \"682b71553b0411eb108f3bac\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "userEventParticipation",
+			"item": [
+				{
+					"name": "requestReward",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation RequestReward ($input: CreateUserEventParticipationHistoryInput!){\n    requestReward(input: $input) {\n        id\n        userId\n        eventId\n        rewardId\n        result\n        resultDetail\n        createdAt\n        updatedAt\n    }\n}\n",
+								"variables": "{\n  \"input\": {\n    \"eventId\": \"682b2ba1059f38ced0475533\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userEventParticipationHistories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query UserEventParticipationHistories(\n  $page: Int\n  $take: Int\n  $eventId: String\n  $userId: String\n  $rewardId: String\n  $result: ParticipationResult\n) {\n  userEventParticipationHistories(\n    page: $page\n    take: $take\n    eventId: $eventId\n    userId: $userId\n    rewardId: $rewardId\n    result: $result\n  ) {\n    edges {\n      id\n      userId\n      eventId\n      rewardId\n      result\n      resultDetail\n      createdAt\n      updatedAt\n      user {\n        id\n        name\n        email\n        role\n        createdAt\n        updatedAt\n      }\n      resolveEventReward {\n        id\n        eventId\n        rewardType\n        quantity\n        weight\n        referenceTable\n        referenceId\n        isDeleted\n        createdAt\n        updatedAt\n      }\n      resolveEvent {\n        id\n        startAt\n        endAt\n        type\n        title\n        description\n        condition\n        isDuplicated\n        totalReward\n        imageUrl\n        isActive\n        isDeleted\n        createdAt\n        updatedAt\n      }\n    }\n    pageInfo {\n      total\n      page\n      take\n      hasNextPage\n      totalPages\n    }\n  }\n}\n",
+								"variables": "{\n  \"take\": 5\n  \n}"
+							}
+						},
+						"url": {
+							"raw": "{{gateayDomain}}/graphql",
+							"host": [
+								"{{gateayDomain}}"
+							],
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

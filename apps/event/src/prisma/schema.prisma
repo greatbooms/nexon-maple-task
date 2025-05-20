@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  startAt      DateTime
+  endAt        DateTime
+  type         EventType
+  title        String
+  description  String?
+  condition    Json? // JSON 형식으로 조건을 저장
+  isDuplicated Boolean   @default(false) // 중복 보상 여부
+  totalReward  Int       @default(0)
+  imageUrl     String?
+  isActive     Boolean   @default(true)
+  isDeleted    Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  eventRewards       EventReward[]                   @relation("EventRewards")
+  userEventHistories UserEventParticipationHistory[] @relation("UserEventHistories")
+}
+
+enum EventType {
+  ATTENDANCE // 출석체크 이벤트
+  INVITE // 친구초대 이벤트
+}
+
+model EventReward {
+  id          String          @id @default(auto()) @map("_id") @db.ObjectId
+  event       Event           @relation("EventRewards", fields: [eventId], references: [id])
+  eventId     String          @db.ObjectId
+  rewardType  EventRewardType
+  quantity    Int             @default(0)
+  weight      Int             @default(1) // 가중치
+  referenceId String? // 포인트, 아이템, 쿠폰의 ID
+  isDeleted   Boolean         @default(false)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  userEventHistories UserEventParticipationHistory[] @relation("UserEventHistories")
+
+  @@index([eventId])
+}
+
+enum EventRewardType {
+  POINT // 포인트
+  ITEM // 아이템
+  COUPON // 쿠폰
+}
+
+model UserEventParticipationHistory {
+  id           String              @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String
+  event        Event               @relation("UserEventHistories", fields: [eventId], references: [id])
+  eventId      String              @db.ObjectId
+  reward       EventReward?        @relation("UserEventHistories", fields: [rewardId], references: [id])
+  rewardId     String?             @db.ObjectId
+  result       ParticipationResult // 참여 결과
+  resultDetail String? // 참여 결과 상세
+  isDeleted    Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([userId])
+  @@index([eventId])
+}
+
+enum ParticipationResult {
+  SUCCESS // 성공
+  FAILURE // 실패
+  CONDITION_NOT_MET // 조건 미달
+  ALREADY_PARTICIPATED // 이미 참여함
+}
+
+model Point {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Item {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Coupon {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

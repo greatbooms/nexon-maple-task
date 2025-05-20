@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  email             String          @unique
+  name              String?
+  password          String
+  role              UserRole        @default(USER)
+  lastLoginAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  loginHistories    LoginHistory[]  @relation("UserLogins")
+  referrerHistories InviteHistory[] @relation("ReferrerHistories")
+  inviteHistories   InviteHistory[] @relation("InviteHistories")
+}
+
+enum UserRole {
+  USER // 보상 요청 가능
+  OPERATOR // 이벤트/보상 들록
+  AUDITOR // 보상 이력 조회만 가능
+  ADMIN // 모든 기능 접근 가능
+}
+
+model LoginHistory {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  user    User     @relation("UserLogins", fields: [userId], references: [id])
+  userId  String   @db.ObjectId
+  loginAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model InviteHistory {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  referrerUser   User     @relation("ReferrerHistories", fields: [referrerUserId], references: [id]) // 친구 초대자
+  referrerUserId String   @db.ObjectId
+  inviteeUser    User     @relation("InviteHistories", fields: [inviteeUserId], references: [id]) // 초대받은 친구
+  inviteeUserId  String   @db.ObjectId
+  inviteAt       DateTime @default(now())
+
+  @@index([referrerUserId])
+  @@index([inviteeUserId])
+}

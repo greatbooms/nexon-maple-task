@@ -40,3 +40,14 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+test-output
+
+# GraphQL
+apps/*/src/prisma/*.graphql
+
+# Prisma
+apps/*/src/prisma/generated
+
+# Local env files
+mongodb-keyfile
