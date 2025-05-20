@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader'
 import { Injectable, Scope } from '@nestjs/common'
 import { EventRewardService } from './event-reward.service'
-import { EventReward } from '../../prisma'
+import { EventReward } from '../../prisma/generated/client'
 
 @Injectable({ scope: Scope.REQUEST })
 export class EventRewardLoader {

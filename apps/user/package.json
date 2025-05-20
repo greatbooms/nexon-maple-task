@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start:dev": "node ../../dist/apps/user/main.js",
-    "build:dev": "nx build user --skip-nx-cache",
-    "user:db-push:dev": "dotenv -e ./apps/user/.env -- prisma db push --schema apps/user/src/prisma/schema.prisma"
+    "user:db-push:dev": "prisma db push --schema ./schema.prisma"
   },
   "nx": {
+    "name": "user",
+    "projectType": "application",
+    "sourceRoot": "apps/user/src",
     "targets": {
       "build": {
         "executor": "nx:run-commands",

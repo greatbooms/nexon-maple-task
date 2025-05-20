@@ -1,12 +1,8 @@
 import { Injectable } from '@nestjs/common'
-import {
-  CreateEventRewardInput,
-  EventRewardInput,
-  EventRewardsArgs,
-  UpdateEventRewardInput,
-} from '../../model'
+import { CreateEventRewardInput, EventRewardInput, EventRewardsArgs, UpdateEventRewardInput } from '../../model'
 import { EventRewardType } from '@maple/models'
-import { EventPrismaService, Prisma } from '../../prisma'
+import { EventPrismaService } from '../../prisma'
+import { Prisma } from '../../prisma/generated/client'
 import { GraphQLError } from 'graphql/error'
 import EventRewardWhereInput = Prisma.EventRewardWhereInput
 

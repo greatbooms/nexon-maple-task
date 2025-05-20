@@ -4,6 +4,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo'
 import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway'
 import { Request } from 'express'
+import { HealthController } from './heath.controller'
+import { TerminusModule } from '@nestjs/terminus'
 
 interface ConnectionContext {
   context: any
@@ -72,7 +74,9 @@ interface ContextParams {
       },
       inject: [ConfigService],
     }),
+    TerminusModule,
   ],
   providers: [],
+  controllers: [HealthController]
 })
 export class AppModule {}

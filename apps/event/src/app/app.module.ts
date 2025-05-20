@@ -9,6 +9,8 @@ import { EventRewardModule } from './event-reward/event-reward.module'
 import { UserEventParticipationHistoryModule } from './user-event-participation-history/user-event-participation-history.module'
 import GraphQLJSON from 'graphql-type-json'
 import { UserModule } from './user/user.module'
+import { HealthController } from './heath.controller'
+import { TerminusModule } from '@nestjs/terminus'
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { UserModule } from './user/user.module'
     }),
     EventPrismaModule,
     AuthModule,
+    TerminusModule,
 
     EventModule,
     EventRewardModule,
@@ -46,5 +49,6 @@ import { UserModule } from './user/user.module'
       useClass: RolesGuard,
     },
   ],
+  controllers: [HealthController],
 })
 export class AppModule {}

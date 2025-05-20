@@ -106,6 +106,12 @@ nexon-maple-node-task/
    - User 서비스는 TCP 기반 마이크로서비스 엔드포인트 제공
    - Event 서비스에서 필요한 사용자 정보 조회 시 활용
 
+3. **DataLoader를 통한 N+1 문제 해결**:
+    - GraphQL 요청 처리 시 발생하는 N+1 쿼리 문제를 방지하기 위해 DataLoader 패턴 적용
+    - 각 리졸버에서 중복된 데이터 요청을 배치 처리하여 데이터베이스 쿼리 최적화
+    - 요청 컨텍스트 내에서 데이터 캐싱을 통한 성능 향상
+    - 특히 복잡한 관계를 가진 데이터 조회 시 쿼리 효율성 크게 개선
+
 ## 데이터베이스
 
 프로젝트는 MongoDB를 사용하며 Prisma ORM을 통해 데이터베이스에 접근합니다.
@@ -124,51 +130,21 @@ nexon-maple-node-task/
 - MongoDB
 
 ### 시작하기
+- 서비스 실행:
+   ```
+   make all   
+   ```
+  - 초기 어드민 계정
+  ```
+  - 이메일: mapel-admin@nexon.co.kr
+  - 비밀번호: qwer123!@#
+  ```
+  
 
-1. 의존성 설치:
-   ```
-   yarn install
-   ```
-
-2. MongoDB 복제셋 실행:
-   ```
-   docker-compose up -d
-   ```
-
-3. 복제셋 초기화:
-   ```
-   sh init-replicaset.sh
-   ```
-
-4. Prisma 데이터베이스 마이그레이션:
-   ```
-   yarn user:db-push:dev
-   yarn event:db-push:dev
-   ```
-
-5. 샘플 데이터 생성:
-   ```
-   sh seed-data.sh
-   초기 어드민 계정 
-    - 이메일: mapel-admin@nexon.co.kr
-    - 비밀번호: qwer123!@#
-   ```
-
-6. 서비스 실행:
-   ```
-   nx serve user
-   nx serve event
-   -- 두 서비스가 켜진 다음 게이트 웨이 실행
-   nx serve gateway
-   ```
-
-7. GraphQL Playground 접속:
+- GraphQL Playground 접속:
    - Gateway: http://localhost:3100/graphql
    - 실행에 도움이 되는 포스트맨 파일은 nexon-maple-task.postman_collection.json 를 참고하세요.
 
-nx 번들링에 실패하여 도커 생성을 못하였습니다
-
-~~빌드시 공통으로 사용하는 라이브러리 참조를 하지 못하는 이슈로...~~
 
 ## 인증 및 권한
 

@@ -2,30 +2,15 @@
   "name": "@maple/models",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {
-    "tslib": "^2.8.1"
-  },
-  "nx": {
-    "targets": {
-      "build": {
-        "executor": "@nx/js:tsc",
-        "outputs": [
-          "{options.outputPath}"
-        ],
-        "options": {
-          "outputPath": "dist/libs/models",
-          "tsConfig": "libs/models/tsconfig.lib.json",
-          "packageJson": "libs/models/package.json",
-          "main": "libs/models/src/index.ts",
-          "assets": [
-            "libs/models/*.md"
-          ],
-          "generateExportsField": true
-        }
-      }
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
     },
-    "tags": [
-      "scope:shared"
-    ]
-  }
+    "./package.json": "./package.json"
+  },
+  "dependencies": {}
 }

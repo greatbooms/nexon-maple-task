@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo'
 import { AuthGuard, AuthModule, RolesGuard } from '@maple/shared'
 import { UserPrismaModule } from '../prisma'
+import { HealthController } from './heath.controller'
+import { TerminusModule } from '@nestjs/terminus'
 
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { UserPrismaModule } from '../prisma'
       }),
       inject: [ConfigService],
     }),
+    TerminusModule,
     UserPrismaModule,
     AuthModule,
 
@@ -38,5 +41,6 @@ import { UserPrismaModule } from '../prisma'
       useClass: RolesGuard,
     },
   ],
+  controllers: [HealthController]
 })
 export class AppModule {}

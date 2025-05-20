@@ -8,9 +8,9 @@
   "scripts": {
     "clear-cache": "nx clear-cache",
     "user:prisma:format": "prisma format --schema apps/user/src/prisma/schema.prisma",
-    "user:db-push:dev": "dotenv -e ./apps/user/.env -- prisma db push --schema apps/user/src/prisma/schema.prisma",
+    "user:db-push:dev": "npx dotenv-cli -e ./apps/user/.env -- prisma db push --schema ./apps/user/src/prisma/schema.prisma",
     "event:prisma:format": "prisma format --schema apps/event/src/prisma/schema.prisma",
-    "event:db-push:dev": "dotenv -e ./apps/event/.env -- prisma db push --schema apps/event/src/prisma/schema.prisma"
+    "event:db-push:dev": "npx dotenv-cli -e ./apps/event/.env -- prisma db push --schema ./apps/event/src/prisma/schema.prisma"
   },
   "private": true,
   "devDependencies": {
@@ -66,6 +66,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^10.4.17",
     "@nestjs/schematics": "^10.2.3",
+    "@nestjs/terminus": "^11.0.0",
     "@nestjs/testing": "^10.4.17",
     "@prisma/client": "^6.8.2",
     "axios": "^1.9.0",

@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { Event, EventReward, EventPrismaService, Prisma } from '../../prisma'
+import { EventPrismaService } from '../../prisma'
+import { Event, EventReward, Prisma } from '../../prisma/generated/client'
 import { UserService } from '../user/user.service'
 import {
   AttendanceEventCondition,
@@ -190,14 +191,16 @@ export class UserEventParticipationHistoryService {
         },
       })
 
-      await tx.event.update({
-        where: { id: cleanedInput.eventId! },
-        data: {
-          totalReward: {
-            decrement: 1,
+      if (cleanedInput.eventId && cleanedInput.result === ParticipationResult.SUCCESS) {
+        await tx.event.update({
+          where: { id: cleanedInput.eventId! },
+          data: {
+            totalReward: {
+              decrement: 1,
+            },
           },
-        },
-      })
+        })
+      }
       return result
     })
   }

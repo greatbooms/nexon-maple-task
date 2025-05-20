@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   mongodb:
     image: mongo:latest
@@ -24,6 +24,83 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 30s
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./apps/user/Dockerfile
+    container_name: user-service
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - PORT=3200
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://root:qwer123%21%40%23@mongodb:27017/maple?authSource=admin&replicaSet=rs0&directConnection=true
+      - JWT_ISSUER=maple-story
+      - JWT_ACCESS_TOKEN_SECRET=access-token-secret
+      - JWT_ACCESS_TOKEN_EXPIRES_IN=1h
+      - JWT_REFRESH_TOKEN_SECRET=refresh-token-secret
+      - JWT_REFRESH_TOKEN_EXPIRES_IN=7d
+      - USER_MICRO_SERVICE_HOST=user-service
+      - USER_MICRO_SERVICE_PORT=3010
+    ports:
+      - "3200:3200"
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:3200/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  event-service:
+    build:
+      context: .
+      dockerfile: ./apps/event/Dockerfile
+    container_name: event-service
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - PORT=3300
+      - NODE_ENV=development
+      - DATABASE_URL=mongodb://root:qwer123%21%40%23@mongodb:27017/maple?authSource=admin&replicaSet=rs0&directConnection=true
+      - JWT_ACCESS_TOKEN_SECRET=access-token-secret
+      - USER_MICRO_SERVICE_HOST=user-service
+      - USER_MICRO_SERVICE_PORT=3010
+    ports:
+      - "3300:3300"
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:3300/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: ./apps/gateway/Dockerfile
+    container_name: gateway-service
+    depends_on:
+      user-service:
+        condition: service_healthy
+      event-service:
+        condition: service_healthy
+    environment:
+      - PORT=3100
+      - NODE_ENV=development
+      - USER_SERVICE_URL=http://user-service:3200/graphql
+      - EVENT_SERVICE_URL=http://event-service:3300/graphql
+    ports:
+      - "3100:3100"
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:3100/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
 volumes:
   mongodb_data:

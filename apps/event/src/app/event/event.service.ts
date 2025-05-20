@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { EventPrismaService, Prisma } from '../../prisma'
+import { EventPrismaService } from '../../prisma'
+import { Prisma } from '../../prisma/generated/client'
 import type { JwtPayload } from '@maple/models'
 import { EventType, UserRole } from '@maple/models'
 import { GraphQLError } from 'graphql/error'
