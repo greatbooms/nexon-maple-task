@@ -10,7 +10,6 @@ nexon-maple-node-task/
 │   ├── user/                    # 사용자 서비스 (GraphQL Federation)
 │   ├── event/                   # 이벤트 서비스 (GraphQL Federation)
 │   ├── gateway/                 # API 게이트웨이 (Apollo Gateway)
-│   └── *-e2e/                   # E2E 테스트 애플리케이션
 ├── libs/                        # 공유 라이브러리
 │   ├── models/                  # 공통 모델 및 타입 정의
 │   └── nest-shared/             # 공통 서비스 및 유틸리티
@@ -174,13 +173,6 @@ nx 번들링에 실패하여 도커 생성을 못하였습니다
 - Authorization 헤더를 통한 토큰 전달
 - 역할 기반 접근 제어 (RBAC)
 - 데코레이터를 통한 권한 검사: `@Roles(UserRole.ADMIN)`
-
-## 개발자 도구
-
-- NX CLI를 통한 애플리케이션 및 라이브러리 관리
-- Jest를 사용한 테스트
-- ESLint 및 Prettier를 통한 코드 스타일링
-- GitLab CI/CD를 통한 자동화된 빌드 및 테스트
 
 ## 라이센스
 
