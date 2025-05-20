@@ -45,15 +45,6 @@
         "^build"
       ]
     },
-    "serve": {
-      "options": {
-        "inspect": {
-          "gateway": 9251,
-          "user": 9252,
-          "event": 9253
-        }
-      }
-    },
     "test": {
       "dependsOn": ["^build"]
     }

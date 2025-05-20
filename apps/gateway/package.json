@@ -32,8 +32,7 @@
         },
         "configurations": {
           "development": {
-            "buildTarget": "gateway:build:development",
-            "inspect": true
+            "buildTarget": "gateway:build:development"
           },
           "production": {
             "buildTarget": "gateway:build:production"

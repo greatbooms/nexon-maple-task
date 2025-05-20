@@ -1,12 +1,13 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "../../dist/out-tsc",
-    "tsBuildInfoFile": "../../dist/out-tsc/libs/nest-shared/tsconfig.lib.tsbuildinfo",
+    "outDir": "../../dist",
     "emitDeclarationOnly": false,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "target": "es2021",
     "strictNullChecks": true,
     "noImplicitAny": true,
@@ -15,11 +16,17 @@
     "composite": true,
     "declaration": true
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts"
+  ],
   "references": [
     {
       "path": "../models/tsconfig.lib.json"
     }
   ],
-  "exclude": ["jest.config.ts", "src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": [
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }

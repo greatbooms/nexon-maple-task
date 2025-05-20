@@ -32,8 +32,7 @@
         },
         "configurations": {
           "development": {
-            "buildTarget": "event:build:development",
-            "inspect": true
+            "buildTarget": "event:build:development"
           },
           "production": {
             "buildTarget": "event:build:production"

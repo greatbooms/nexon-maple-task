@@ -1,10 +1,9 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "../../dist/out-tsc",
-    "tsBuildInfoFile": "../../dist/out-tsc/libs/models/tsconfig.lib.tsbuildinfo",
-    "declaration": true,
+    "outDir": "../../dist",
+    "emitDeclarationOnly": false,
     "forceConsistentCasingInFileNames": true,
     "types": [
       "node"
@@ -15,14 +14,16 @@
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true,
     "composite": true,
+    "declaration": true
   },
   "include": [
     "src/**/*.ts"
+  ],
+  "references": [
   ],
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",
     "src/**/*.test.ts"
-  ],
-  "references": []
+  ]
 }

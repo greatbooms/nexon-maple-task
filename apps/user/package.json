@@ -38,8 +38,7 @@
         },
         "configurations": {
           "development": {
-            "buildTarget": "user:build:development",
-            "inspect": true
+            "buildTarget": "user:build:development"
           },
           "production": {
             "buildTarget": "user:build:production"
